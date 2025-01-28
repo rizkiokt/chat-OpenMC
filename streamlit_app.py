@@ -16,7 +16,6 @@ gemini_api_key = st.text_input("Gemini API Key", type="password")
 if not gemini_api_key:
     st.info("Please add your Gemini API key to continue.", icon="🔑")
 else:
-    
     # Configure the Gemini API
     genai.configure(api_key=gemini_api_key)
     model = genai.GenerativeModel("gemini-1.5-flash")
