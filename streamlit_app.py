@@ -2,6 +2,11 @@ import streamlit as st
 import google.generativeai as genai
 import json
 import time
+import chromadb
+from chromadb.utils import embedding_functions
+
+from rag.generation import generate_answer
+
 
 # Show title and description.
 st.title("💡 OpenMC Chatbot")
@@ -19,7 +24,11 @@ else:
     # Configure the Gemini API
     genai.configure(api_key=gemini_api_key)
     model = genai.GenerativeModel("gemini-1.5-flash")
-    
+
+    client = chromadb.PersistentClient(path="./chroma_db")
+    embedding_fn = embedding_functions.DefaultEmbeddingFunction()
+    collection = client.get_collection(name="openmc_embeddings", embedding_function=embedding_fn)    
+
     # Load chat history from a file
     def load_chat_history():
         try:
@@ -59,20 +68,20 @@ else:
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Generate a response using the Gemini API.
-        response = model.generate_content(f"Provide assistance with OpenMC nuclear simulations: {prompt}")
-        
+        response = generate_answer(prompt, collection, st.session_state.messages)
+
+
         # Typing animation effect
         with st.chat_message("assistant"):
             response_text = ""
             message_placeholder = st.empty()
-            for char in response.text:
+            for char in response:
                 response_text += char
                 message_placeholder.markdown(response_text + "▌")
                 time.sleep(0.001)
             message_placeholder.markdown(response_text)
 
-        st.session_state.messages.append({"role": "assistant", "content": response.text})
+        st.session_state.messages.append({"role": "assistant", "content": response})
 
         # Save chat history
         save_chat_history(st.session_state.messages)
