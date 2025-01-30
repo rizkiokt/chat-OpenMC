@@ -2,6 +2,7 @@ import google.generativeai as genai
 import numpy as np
 import chromadb
 from chromadb.utils import embedding_functions
+import os
 
 # Function to compute similarity score (cosine similarity)
 def compute_similarity(embedding1, embedding2):
@@ -9,35 +10,6 @@ def compute_similarity(embedding1, embedding2):
     embedding2 = np.array(embedding2)
     return np.dot(embedding1, embedding2) / (np.linalg.norm(embedding1) * np.linalg.norm(embedding2))
 
-# Function to retrieve the most relevant sections based on a query
-def retrieve_relevant_sections(query, collection, model="models/text-embedding-004", top_k=5):
-    # Generate the embedding for the query
-    query_embedding_result = genai.embed_content(
-        model=model,
-        content=query
-    )
-    query_embedding = query_embedding_result["embedding"]
-
-    # Fetch all embeddings from ChromaDB collection
-    results = collection.get(include=["metadatas", "embeddings"])
-
-    # Compute similarity scores between query embedding and each stored embedding
-    similarities = []
-    for i, chunk_embedding in enumerate(results["embeddings"]):
-        similarity = compute_similarity(query_embedding, chunk_embedding)
-        similarities.append({
-            "file_path": results["metadatas"][i]["file_path"],
-            "section": results["metadatas"][i]["section"],
-            "document": results["metadatas"][i]["document"],
-            "chunk": results["embeddings"][i],
-            "similarity": similarity
-        })
-    
-    # Sort the results by similarity in descending order
-    similarities = sorted(similarities, key=lambda x: x["similarity"], reverse=True)
-    
-    # Return the top_k most relevant results
-    return similarities[:top_k]
 
 # Function to retrieve relevant passages based on query
 def get_relevant_docs(query, collection, top_k=5):
@@ -50,8 +22,7 @@ def get_relevant_docs(query, collection, top_k=5):
 
     # Fetch all embeddings from ChromaDB collection
     results = collection.get(include=["metadatas", "embeddings"])
-        
-
+    
     # Compute similarity scores
     similarities = []
     for i, chunk_embedding in enumerate(results["embeddings"]):
@@ -78,10 +49,10 @@ if __name__ == "__main__":
     collection = client.get_collection(name="openmc_embeddings", embedding_function=embedding_fn)
 
     # Insert your query
-    query = "What is OpenMC"
+    query = "Write me pincell input example in .py"
 
     # Retrieve the top 5 most relevant sections
-    top_results = retrieve_relevant_sections(query, collection, top_k=5)
+    top_results = get_relevant_docs(query, collection, top_k=5)
 
     # Print the results
     for i, result in enumerate(top_results, 1):

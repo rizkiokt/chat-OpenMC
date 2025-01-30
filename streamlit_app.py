@@ -2,6 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 import json
 import time
+import os
 import chromadb
 from chromadb.utils import embedding_functions
 
@@ -17,13 +18,14 @@ st.write(
     )
 
 # Ask user for their Gemini API key via `st.text_input`.
-gemini_api_key = st.text_input("Gemini API Key", type="password")
+#gemini_api_key = st.text_input("Gemini API Key", type="password")
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 if not gemini_api_key:
     st.info("Please add your Gemini API key to continue.", icon="🔑")
 else:
     # Configure the Gemini API
     genai.configure(api_key=gemini_api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-1.5-pro")
 
     client = chromadb.PersistentClient(path="./chroma_db")
     embedding_fn = embedding_functions.DefaultEmbeddingFunction()

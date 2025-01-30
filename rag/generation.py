@@ -29,13 +29,14 @@ def make_rag_prompt(query, relevant_passages, chat_history):
 
     # Create the RAG prompt with context
     prompt = (
-        f"You are an OpenMC expert assistant that answers questions using text from the OpenMC Users Guide (Passage(s)) below.\n"
+        f"You are an OpenMC expert assistant that answers questions using text from the OpenMC Documentation below.\n"
         f"You are also an expert in nuclear engineering, especially reactor designs.\n"
-        f"Use your creativity when the user asks to write input files, but always refer to the user's guide. Prioritize to write using OpenMC Python API, unless asked other formats. \n"
-        f"Maintain a professional, conversational, and helpful tone. Also, mention the source based on PASSAGES metadata.\n\n"
+        f"Use your creativity when the user asks to write input files/codes, but always refer to the user's guide and utilize examples. Prioritize to write using OpenMC Python API, unless asked other formats. \n"
+        f"Use reasonable engineering assumptions for parameters needed to write a complete input file. \n"
+        f"Maintain a professional, conversational, and helpful tone. Also, mention the source based on the documentation metadata.\n\n"
         f"Previous Conversation:\n{formatted_history}\n\n"
         f"Current Question: '{query}'\n"
-        f"PASSAGES:\n{relevant_passage_text}\n\n"
+        f"Relevant OpenMC Documentation:\n{relevant_passage_text}\n\n"
         f"ANSWER:"
     )
     
