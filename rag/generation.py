@@ -44,13 +44,13 @@ def make_rag_prompt(query, relevant_passages, chat_history):
 
 
 # Function to generate a response using Google Gemini
-def generate_response(user_prompt):
-    model = genai.GenerativeModel('gemini-1.5-flash')
+def generate_response(model,user_prompt):
+    #model = genai.GenerativeModel('gemini-1.5-flash')
     answer = model.generate_content(user_prompt)
     return answer.text
 
 # Main function to generate an answer with conversational history
-def generate_answer(query, collection, chat_history):
+def generate_answer(model, query, collection, chat_history):
     # Retrieve relevant passages
     relevant_passages = get_relevant_docs(query, collection)
 
@@ -58,7 +58,7 @@ def generate_answer(query, collection, chat_history):
     prompt = make_rag_prompt(query, relevant_passages, chat_history)
 
     # Generate the answer using the prompt
-    answer = generate_response(prompt)
+    answer = generate_response(model, prompt)
     return answer
 
 
