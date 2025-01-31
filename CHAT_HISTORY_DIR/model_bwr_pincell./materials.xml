@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<materials>
+  <material depletable="true" id="1" name="UO2 + 6% Gd2O3 Fuel">
+    <density units="g/cm3" value="10.5"/>
+    <nuclide ao="5.60673666984396e-08" name="U234"/>
+    <nuclide ao="6.272822069647203e-06" name="U235"/>
+    <nuclide ao="0.00012012257340257917" name="U238"/>
+    <nuclide ao="2.8732538015806907e-08" name="U236"/>
+    <nuclide ao="0.07263760473275657" name="O16"/>
+    <nuclide ao="2.75953124802302e-05" name="O17"/>
+    <nuclide ao="0.0001456508260829881" name="O18"/>
+    <nuclide ao="0.00010411034482758622" name="Gd152"/>
+    <nuclide ao="0.0011348027586206898" name="Gd154"/>
+    <nuclide ao="0.00770416551724138" name="Gd155"/>
+    <nuclide ao="0.010655693793103448" name="Gd156"/>
+    <nuclide ao="0.008146634482758621" name="Gd157"/>
+    <nuclide ao="0.012930504827586209" name="Gd158"/>
+    <nuclide ao="0.011379260689655172" name="Gd160"/>
+    <nuclide ao="0.007925923663448277" name="O16"/>
+    <nuclide ao="3.011089655172414e-06" name="O17"/>
+    <nuclide ao="1.5892833103448274e-05" name="O18"/>
+  </material>
+  <material id="2" name="Zircaloy-2 Cladding">
+    <density units="g/cm3" value="6.55"/>
+    <nuclide name="Zr90" wo="0.49945525746594666"/>
+    <nuclide name="Zr91" wo="0.11013174141304272"/>
+    <nuclide name="Zr92" wo="0.17018929941673736"/>
+    <nuclide name="Zr94" wo="0.17622737777208264"/>
+    <nuclide name="Zr96" wo="0.02899632393219072"/>
+    <nuclide name="Sn112" wo="0.00013258696500899892"/>
+    <nuclide name="Sn114" wo="9.18244938630758e-05"/>
+    <nuclide name="Sn115" wo="4.771905899254868e-05"/>
+    <nuclide name="Sn116" wo="0.0020584231441515095"/>
+    <nuclide name="Sn117" wo="0.0010966473380910862"/>
+    <nuclide name="Sn118" wo="0.003487981278597598"/>
+    <nuclide name="Sn119" wo="0.0012475771051862219"/>
+    <nuclide name="Sn120" wo="0.004771539508846636"/>
+    <nuclide name="Sn122" wo="0.000689409486231945"/>
+    <nuclide name="Sn124" wo="0.0008762916210303822"/>
+    <nuclide name="Fe54" wo="7.05694777838357e-05"/>
+    <nuclide name="Fe56" wo="0.0011487691097445307"/>
+    <nuclide name="Fe57" wo="2.7004607670932956e-05"/>
+    <nuclide name="Fe58" wo="3.6568048007007355e-06"/>
+    <nuclide name="Cr50" wo="4.173686622718313e-05"/>
+    <nuclide name="Cr52" wo="0.000836993623513459"/>
+    <nuclide name="Cr53" wo="9.673586818675183e-05"/>
+    <nuclide name="Cr54" wo="2.4533642072606143e-05"/>
+    <nuclide name="Ni58" wo="0.0003359885264829495"/>
+    <nuclide name="Ni60" wo="0.0001338798144961478"/>
+    <nuclide name="Ni61" wo="5.916795426483551e-06"/>
+    <nuclide name="Ni62" wo="1.917411151743585e-05"/>
+    <nuclide name="Ni64" wo="5.04075207698335e-06"/>
+  </material>
+  <material id="3" name="Borated Water">
+    <density units="g/cm3" value="0.74"/>
+    <nuclide ao="2.0" name="H1"/>
+    <nuclide ao="1.0" name="O16"/>
+    <nuclide ao="8.0042e-06" name="B10"/>
+    <nuclide ao="3.2218e-05" name="B11"/>
+  </material>
+</materials>

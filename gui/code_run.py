@@ -14,26 +14,29 @@ def extract_python_code(response_text):
     return None
 
 
-def handle_python_script(messages, topic):
+def save_python_script(messages, topic):
     """
-    Processes the last message to extract Python code, save it to a file, and provide an option to run it.
+    Extracts Python code from the last message and saves it to a file.
     
     Args:
         messages (list): List of chat messages.
         topic (str): The topic name used for directory organization.
         extract_python_code (function): Function to extract Python code from a message.
+    
+    Returns:
+        str: Path to the saved Python file, or None if no code was extracted.
     """
     if not messages:
-        return
+        return None
     
     last_response = messages[-1]["content"]
     code_content = extract_python_code(last_response)
     
     if not code_content:
-        return
+        return None
     
     python_filename = "response.py"
-    topic_dir = os.path.join(CHAT_HISTORY_DIR, topic)
+    topic_dir = os.path.join("CHAT_HISTORY_DIR", topic)
     os.makedirs(topic_dir, exist_ok=True)  # Ensure the directory exists
     code_file_path = os.path.join(topic_dir, python_filename)
     
@@ -41,17 +44,27 @@ def handle_python_script(messages, topic):
     with open(code_file_path, "w") as f:
         f.write(code_content)
     
-    
+    return code_file_path
 
-    # Streamlit UI buttons
+def run_python_script(script_path):
+    """
+    Runs a Python script and displays output in Streamlit.
+    
+    Args:
+        script_path (str): Path to the Python script file.
+    """
+    if not script_path or not os.path.exists(script_path):
+        st.error("Script file not found.")
+        return
+    
     if st.button("Run Script"):
         try:
-            with st.expander("Run Output", expanded=True):
+            with st.expander("Script Output", expanded=True):
                 output_area = st.empty()  # Placeholder for live updates
                 
                 process = subprocess.Popen(
-                    [sys.executable, python_filename],  
-                    cwd=topic_dir,  # Set working directory
+                    [sys.executable, os.path.basename(script_path)],  
+                    cwd=os.path.dirname(script_path),  # Set working directory
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                     text=True,

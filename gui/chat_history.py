@@ -24,6 +24,11 @@ def load_chat_history(topic):
 def save_chat_history(topic, messages):
     with open(get_chat_history_path(topic), "w") as file:
         json.dump(messages, file)
+import os
 
 def get_saved_chats():
-    return [d for d in os.listdir(CHAT_HISTORY_DIR) if os.path.isdir(os.path.join(CHAT_HISTORY_DIR, d))]
+    chat_dirs = [d for d in os.listdir(CHAT_HISTORY_DIR) if os.path.isdir(os.path.join(CHAT_HISTORY_DIR, d))]
+    # Sort directories by last modified time
+    chat_dirs.sort(key=lambda d: os.path.getmtime(os.path.join(CHAT_HISTORY_DIR, d)), reverse=True)
+    return chat_dirs
+
