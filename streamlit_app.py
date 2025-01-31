@@ -48,7 +48,7 @@ right.subheader("Code Editor")
 
 
 genai.configure(api_key=gemini_api_key)
-model = genai.GenerativeModel("gemini-1.5-pro")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 client = chromadb.PersistentClient(path="./chroma_db")
 embedding_fn = embedding_functions.DefaultEmbeddingFunction()
@@ -102,7 +102,8 @@ with left.container(height=600, border=True):
         st.session_state.messages.append({"role": "assistant", "content": response})
         save_chat_history(st.session_state.topic, st.session_state.messages)
 
-#handle_python_script(st.session_state.messages, st.session_state.topic)
+        st.rerun()
+
 
 # code editor config variables
 height = [19, 22]

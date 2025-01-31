@@ -36,7 +36,7 @@ def save_python_script(messages, topic):
         return None
     
     python_filename = "response.py"
-    topic_dir = os.path.join("CHAT_HISTORY_DIR", topic)
+    topic_dir = os.path.join(CHAT_HISTORY_DIR, topic)
     os.makedirs(topic_dir, exist_ok=True)  # Ensure the directory exists
     code_file_path = os.path.join(topic_dir, python_filename)
     
